@@ -16,7 +16,7 @@ RUN pecl install pcov && docker-php-ext-enable pcov
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-COPY config/apache.conf /etc/apache2/sites-enabled/000-default.conf
+COPY ./apache.conf /etc/apache2/sites-enabled/000-default.conf
 COPY ./ /var/www/html
 
 RUN composer install --no-scripts --optimize-autoloader
