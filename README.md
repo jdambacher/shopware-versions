@@ -25,7 +25,11 @@ The webservice will respond with a 302 redirect to the real Shopware download ur
 Get the download url for the latest version:
 
 ```curl
-curl -s https://sw-version.dambacher.net/latest
+curl -s https://sw-version.dambacher.net/version
+```
+or 
+```curl
+curl -s https://sw-version.dambacher.net/version/latest
 ```
 
 ## Future ideas
