@@ -18,12 +18,12 @@ class VersionController extends AbstractController
     }
 
     #[Route('/version/{versionNo}', name: 'version')]
-    public function version(string $versionNo): Response
+    public function version(string $versionNo = 'latest'): Response
     {
         $versions = $this->versionLoader->getChangelog();
 
         // Simply return latest version if version no. is not given in request
-        if (!$versionNo) {
+        if (!$versionNo || $versionNo === 'latest') {
             return new RedirectResponse($versions[0]->getInstallUrl());
         }
 
@@ -36,5 +36,11 @@ class VersionController extends AbstractController
         }
 
         return new Response('Version not found', Response::HTTP_NOT_FOUND);
+    }
+
+    #[Route('/version', name: 'latest-version')]
+    public function latestVersion(): Response
+    {
+        return $this->redirectToRoute('version', ['versionNo' => 'latest']);
     }
 }
