@@ -9,7 +9,8 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class VersionLoader
 {
-    const CHANGELOG_URL='https://www.shopware.com/en/changelog';
+    const CHANGELOG_URL = 'https://www.shopware.com/en/changelog';
+    const S3_BASE_URL = 'https://releases.shopware.com/sw6';
 
     public function getChangelog(): array
     {
@@ -30,12 +31,27 @@ class VersionLoader
         $versions = $accordions->each(function (Crawler $node) {
            $versionNo = str_replace('-', '.', $node->first()->attr('id'));
            $urls = $node->filter('.release-details--cta > a')->each(function (Crawler $node) {
-               return $node->attr('href');
+               return $this->getRealUrl($node->attr('href'));
            });
 
            return new Version($versionNo, $urls[0] ?? null, $urls[1] ?? null);
         });
 
         return $versions;
+    }
+
+    /*
+     * Returns the real url at Amazon S3 after the redirect
+     */
+    private function getRealUrl(?string $url): ?string
+    {
+        if (!$url) {
+            return null;
+        }
+
+        $url = explode('/', $url);
+        $url = array_pop($url);
+
+        return self::S3_BASE_URL . '/' . $url;
     }
 }
