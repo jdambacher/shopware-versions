@@ -29,13 +29,28 @@ curl -s https://sw-version.dambacher.net/version
 ```
 or 
 ```curl
-curl -s https://sw-version.dambacher.net/version/latest
+curl -s https://sw-version.dambacher.net/version/6
 ```
+
+### For partial version strings
+Get the download url for the latest version of a partial version string (e.g. use `6.4.16` to get the latest patch version of `6.4.16`).
+
+If `6.4.16.3` is the last patch version in this minor version, this will give you the download url for Shopware 6.4.16.3:
+
+```curl
+curl -s https://sw-version.dambacher.net/version/6.4.16
+```
+
+You can also request the latest version of a major version (e.g. `6.4`):
+
+```curl
+curl -s https://sw-version.dambacher.net/version/6.4
+```
+
 
 ## Future ideas
 Here's a list of ideas for future releases:
 - Cache the changelog page to reduce the load on Shopware's servers and maintain a download link even if the changelog page is not accessible
-- Add a parameter to get the download url for the latest minor or patch version of a specific major version
 - Listen for the `Accept` header and return the download url as plain text, json or xml
 - Collect more data from the changelog page (e.g. hash, release date, bugfixes etc.)
 - Enable to use this package via composer to get the download url in your own project without rely on the webservice
