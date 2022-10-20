@@ -16,12 +16,20 @@ class VersionLoader
     {
         $html = file_get_contents(self::CHANGELOG_URL);
 
+        if (!is_string($html)) {
+            throw new \Exception('Could not load changelog');
+        }
+
         $crawler = new Crawler($html);
 
         $accordions = $crawler
             ->filter('.accordion--column > .accordion');
 
         return $accordions->each(function (Crawler $node) {
+            if (!$node->first()->attr('id')) {
+                return null;
+            }
+
             $versionNo = str_replace('-', '.', $node->first()->attr('id'));
             $urls      = $node->filter('.release-details--cta > a')->each(function (Crawler $node) {
                 return $this->getRealUrl($node->attr('href'));

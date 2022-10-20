@@ -26,6 +26,9 @@ class VersionController extends AbstractController
             return new Response('Version not found', Response::HTTP_NOT_FOUND);
         }
 
+        if (!$version->getInstallUrl()) {
+            return new Response('Download url for given version not found', Response::HTTP_NOT_FOUND);
+        }
         return new RedirectResponse($version->getInstallUrl());
     }
 }
