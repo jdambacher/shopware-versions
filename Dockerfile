@@ -19,7 +19,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 COPY ./apache.conf /etc/apache2/sites-enabled/000-default.conf
 COPY ./ /var/www/html
 
-RUN composer install --no-scripts --optimize-autoloader
+RUN composer install --no-scripts --optimize-autoloader --no-dev
 
 ###> recipes ###
 ### recipes ###

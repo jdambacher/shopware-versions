@@ -20,11 +20,17 @@ jobs:
                       ${{ runner.os }}-php-
             - name: Install Dependencies
               run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-            - name: Create Database
-              run: |
-                  mkdir -p data
-                  touch data/database.sqlite
             - name: Execute tests (Unit and Feature tests) via PHPUnit
-              env:
-                  DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
-              run: php -dpcov.enabled=1 -dpcov.directory=. ./vendor/bin/phpunit -c phpunit.xml.dist --coverage-html coverage --coverage-text --colors=always
+              run: php -dpcov.enabled=1 -dpcov.directory=. ./vendor/bin/phpunit -c phpunit.xml.dist --coverage-html coverage --coverage-text --colors=always --coverage-cobertura=coverage/cobertura-coverage.xml
+            - name: Code Coverage Report
+              uses: irongut/CodeCoverageSummary@1.3.0
+              with:
+                  filename: coverage/coverage.cobertura.xml
+                  badge: true
+                  fail_below_min: true
+                  format: markdown
+                  hide_branch_rate: false
+                  hide_complexity: true
+                  indicators: true
+                  output: both
+                  thresholds: '75 90'
