@@ -16,7 +16,7 @@ class VersionLoader
     {
         $html = file_get_contents(self::CHANGELOG_URL);
 
-        if (!is_string($html)) {
+        if (!\is_string($html)) {
             throw new \Exception('Could not load changelog');
         }
 
