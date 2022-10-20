@@ -5,8 +5,8 @@ RUN a2enmod rewrite
 RUN apt update \
     && apt install -y zlib1g-dev g++ git libicu-dev zip libzip-dev zip npm \
     && docker-php-ext-install intl opcache \
-    && pecl install apcu pcov \
-    && docker-php-ext-enable apcu pcov \
+    && pecl install apcu \
+    && docker-php-ext-enable apcu \
     && docker-php-ext-configure zip \
     && docker-php-ext-install zip
 
