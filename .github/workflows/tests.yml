@@ -27,4 +27,4 @@ jobs:
             - name: Execute tests (Unit and Feature tests) via PHPUnit
               env:
                   DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
-              run: php -dpcov.enabled=1 -dpcov.directory=. ./vendor/bin/phpunit -c phpunit.xml --coverage-html coverage --coverage-text --colors=always
+              run: php -dpcov.enabled=1 -dpcov.directory=. ./vendor/bin/phpunit -c phpunit.xml.dist --coverage-html coverage --coverage-text --colors=always

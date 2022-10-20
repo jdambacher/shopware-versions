@@ -7,6 +7,7 @@
         "php": ">=8.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "friendsofphp/php-cs-fixer": "^3.12",
         "symfony/console": "6.1.*",
         "symfony/css-selector": "6.1.*",
         "symfony/dom-crawler": "6.1.*",
