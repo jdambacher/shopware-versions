@@ -1,0 +1,42 @@
+name: Tests
+on: [push]
+jobs:
+    phpunit:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.1'
+            - uses: actions/checkout@v2
+            - name: Copy .env.test.local
+              run: php -r "file_exists('.env.test.local') || copy('.env.test', '.env.test.local');"
+            - name: Cache Composer packages
+              id: composer-cache
+              uses: actions/cache@v2
+              with:
+                  path: vendor
+                  key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-php-
+            - name: Install Dependencies
+              run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+            - name: Execute tests (Unit and Feature tests) via PHPUnit
+              run: php -dpcov.enabled=1 -dpcov.directory=. ./vendor/bin/phpunit -c phpunit.xml.dist --coverage-html coverage --coverage-text --colors=always --coverage-cobertura=./cobertura-coverage.xml
+            - name: Code Coverage Report
+              uses: irongut/CodeCoverageSummary@v1.3.0
+              with:
+                  filename: ./cobertura-coverage.xml
+                  badge: true
+                  fail_below_min: true
+                  format: markdown
+                  hide_branch_rate: false
+                  hide_complexity: true
+                  indicators: true
+                  output: both
+                  thresholds: '75 90'
+            - name: Add Coverage PR Comment
+              uses: marocchino/sticky-pull-request-comment@v2
+              if: github.event_name == 'pull_request'
+              with:
+                  recreate: true
+                  path: code-coverage-results.md

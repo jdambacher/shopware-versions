@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Entity;
@@ -11,9 +12,9 @@ class Version
 
     public function __construct(string $versionNo, ?string $installUrl, ?string $updateUrl)
     {
-        $this->versionNo = $versionNo;
+        $this->versionNo  = $versionNo;
         $this->installUrl = $installUrl;
-        $this->updateUrl = $updateUrl;
+        $this->updateUrl  = $updateUrl;
     }
 
     public function getVersionNo(): string

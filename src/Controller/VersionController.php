@@ -1,9 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Entity\Version;
 use App\VersionLoader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -24,6 +24,10 @@ class VersionController extends AbstractController
             $version = $this->versionLoader->getSpecificVersion($versionNo);
         } catch (\Exception $e) {
             return new Response('Version not found', Response::HTTP_NOT_FOUND);
+        }
+
+        if (!$version->getInstallUrl()) {
+            return new Response('Download url for given version not found', Response::HTTP_NOT_FOUND);
         }
 
         return new RedirectResponse($version->getInstallUrl());
