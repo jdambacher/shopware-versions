@@ -45,25 +45,25 @@ class VersionLoader
         $splittedVersionNo = $this->splitVersionNo($versionNo);
 
         // TODO: This is ugly, but works. @future me: Please refactor this.
-        if (!$splittedVersionNo['base']) {
+        if ($splittedVersionNo['base'] === null) {
             $base = array_shift($versions);
         } else {
             $base = $versions[$splittedVersionNo['base']];
         }
 
-        if (!$splittedVersionNo['major']) {
+        if ($splittedVersionNo['major'] === null) {
             $major = array_shift($base);
         } else {
             $major = $base[$splittedVersionNo['major']];
         }
 
-        if (!$splittedVersionNo['minor']) {
+        if ($splittedVersionNo['minor'] === null) {
             $minor = array_shift($major);
         } else {
             $minor = $major[$splittedVersionNo['minor']];
         }
 
-        if (!$splittedVersionNo['patch']) {
+        if ($splittedVersionNo['patch'] === null) {
             $patch = array_shift($minor);
         } else {
             $patch = $minor[$splittedVersionNo['patch']];
