@@ -5,8 +5,8 @@ RUN a2enmod rewrite
 RUN apt update \
     && apt install -y zlib1g-dev g++ git libicu-dev zip libzip-dev zip npm \
     && docker-php-ext-install intl opcache \
-    && pecl install apcu \
-    && docker-php-ext-enable apcu \
+    && pecl install apcu pcov \
+    && docker-php-ext-enable apcu pcov \
     && docker-php-ext-configure zip \
     && docker-php-ext-install zip
 
@@ -26,4 +26,3 @@ RUN composer install --no-scripts --optimize-autoloader
 
 WORKDIR /var/www/html
 CMD ["apache2-foreground"]
-
