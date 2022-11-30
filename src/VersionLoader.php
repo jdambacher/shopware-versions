@@ -106,7 +106,7 @@ class VersionLoader
         $versionNo = explode('.', $versionNo);
 
         return [
-            'base'  => $versionNo[0] ?? null,
+            'base'  => str_replace('#', '', $versionNo[0]) ?? null,
             'major' => $versionNo[1] ?? null,
             'minor' => $versionNo[2] ?? null,
             'patch' => $versionNo[3] ?? null,
