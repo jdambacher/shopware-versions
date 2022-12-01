@@ -9,7 +9,7 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class VersionLoader
 {
-    public const CHANGELOG_URL = 'https://www.shopware.com/en/changelog';
+    public const CHANGELOG_URL = 'https://www.shopware.com/en/changelog/';
     public const S3_BASE_URL   = 'https://releases.shopware.com/sw6';
 
     public function getChangelog(): array
@@ -106,7 +106,7 @@ class VersionLoader
         $versionNo = explode('.', $versionNo);
 
         return [
-            'base'  => str_replace('#', '', $versionNo[0]) ?? null,
+            'base'  => str_replace('#', '', $versionNo[0]),
             'major' => $versionNo[1] ?? null,
             'minor' => $versionNo[2] ?? null,
             'patch' => $versionNo[3] ?? null,
