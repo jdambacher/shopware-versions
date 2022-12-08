@@ -103,6 +103,7 @@ class VersionLoader
     private function splitVersionNo(string $versionNo): array
     {
         // TODO: Use regex here
+        $versionNo = str_replace('release.', '', $versionNo);
         $versionNo = explode('.', $versionNo);
 
         return [
